@@ -9,11 +9,19 @@ const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
 const index = require('./routes/index')
 const users = require('./routes/users')
+const jwtKoa = require('koa-jwt')
 const { REDIS_CONF } = require('./conf/db')
+const { SECRET_CODE } = require('./conf/constant')
 
 // error handler
 onerror(app)
-
+app.use(
+  jwtKoa({
+    secret: SECRET_CODE
+  }).unless({
+    path: [/^\users\/login/] // 自定义忽略jwt验证目录
+  })
+)
 // middlewares
 app.use(
   bodyparser({
