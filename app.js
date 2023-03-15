@@ -19,7 +19,7 @@ app.use(
   jwtKoa({
     secret: SECRET_CODE
   }).unless({
-    path: [/^\users\/login/] // 自定义忽略jwt验证目录
+    path: [/^\/users\/login/] // 自定义忽略jwt验证目录
   })
 )
 // middlewares
