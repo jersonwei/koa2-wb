@@ -1,8 +1,8 @@
 /**
  * @description sequelize 同步
  */
-const seq = require('./init.js')
-// require('./model.js')
+const seq = require('./seq')
+require('./model/index')
 
 // 测试链接
 seq
