@@ -10,6 +10,7 @@ const {
 } = require('../model/ErrorInfo')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { getUserInfo, createUser } = require('../services/user')
+const doCropto = require('../utils/cryp')
 /**
  * @description 用户是否存在
  */
@@ -40,7 +41,7 @@ async function register ({ userName, password, gender }) {
   }
   // 注册 service
   try {
-    await createUser({ userName, password, gender })
+    await createUser({ userName, password: doCropto(password), gender })
     return new SuccessModel()
   } catch (error) {
     console.err(error.message, error.stack)

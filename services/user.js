@@ -2,7 +2,7 @@
  * @description  user service
  */
 
-const { User } = require('../db/model')
+const { User } = require('../db/model/index')
 const { formatUser } = require('./_format')
 
 /**

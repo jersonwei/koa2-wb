@@ -14,6 +14,7 @@ const index = require('./routes/index')
 const userViewRouter = require('./routes/admin')
 // const jwtKoa = require('koa-jwt')
 const { REDIS_CONF } = require('./conf/db')
+const { SECRET_CODE } = require('./conf/constant')
 // const { SECRET_CODE } = require('./conf/constant')
 
 // error handler
@@ -51,7 +52,7 @@ app.use(async (ctx, next) => {
 })
 
 // session 配置
-app.keys = ['Uisdf_12312#$']
+app.keys = [SECRET_CODE]
 app.use(
   session({
     key: 'weibo.sid', // cookie name 默认是 koa.sid
