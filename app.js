@@ -7,6 +7,8 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
+// 路由
+const userApiRouter = require('./routes/api/user')
 const index = require('./routes/index')
 // const users = require('./routes/users')
 const userViewRouter = require('./routes/admin')
@@ -67,6 +69,7 @@ app.use(
 )
 // routes
 app.use(index.routes(), index.allowedMethods())
+app.use(userApiRouter.routes(), userApiRouter.allowedMethods())
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 // app.use(users.routes(), users.allowedMethods())
 
