@@ -2,7 +2,7 @@
  * @description user API 路由
  */
 
-const { isExist, register } = require('../../controller/user')
+const { isExist, register, login } = require('../../controller/user')
 const { genValidator } = require('../../midwares/validator')
 const userValidate = require('../../validator/user')
 
@@ -24,4 +24,9 @@ router.post('/isExist', async (ctx, next) => {
   ctx.body = await isExist(userName)
 })
 
+// 登陆
+router.post('/login', async (ctx, next) => {
+  const { userName, password } = ctx.request.body
+  ctx.body = await login(ctx, userName, password)
+})
 module.exports = router
