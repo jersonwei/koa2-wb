@@ -5,10 +5,11 @@
 
 const {
   registerUserNameNotExistInfo,
-  registerUserNameExistInfo
+  registerUserNameExistInfo,
+  registerFailInfo
 } = require('../model/ErrorInfo')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
-const { getUserInfo } = require('../services/user')
+const { getUserInfo, createUser } = require('../services/user')
 /**
  * @description 用户是否存在
  */
@@ -38,6 +39,13 @@ async function register ({ userName, password, gender }) {
     return ErrorModel(registerUserNameExistInfo)
   }
   // 注册 service
+  try {
+    await createUser({ userName, password, gender })
+    return new SuccessModel()
+  } catch (error) {
+    console.err(error.message, error.stack)
+    return new ErrorModel(registerFailInfo)
+  }
 }
 module.exports = {
   isExist,
