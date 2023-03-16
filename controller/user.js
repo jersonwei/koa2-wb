@@ -3,6 +3,7 @@
  * @param {string} userName 用户名
  */
 
+const { registerUserNameNotExistInfo } = require('../model/ErrorInfo')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { getUserInfo } = require('../services/user')
 
@@ -16,10 +17,7 @@ async function isExist (userName) {
     return new SuccessModel(userInfo)
   } else {
     // 返回异常
-    return new ErrorModel({
-      errno: 10003,
-      message: '用户名已存在'
-    })
+    return new ErrorModel(registerUserNameNotExistInfo)
   }
 }
 
