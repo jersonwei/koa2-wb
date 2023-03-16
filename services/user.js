@@ -23,7 +23,7 @@ async function getUserInfo (userName, password) {
   }
   // 查询
   const result = await User.findOne({
-    attributes: ['id', 'userName', 'password', 'city', 'picture'],
+    attributes: ['id', 'userName', 'nickName', 'picture', 'city'],
     where: whereOpt
   })
   if (result === null) return result
