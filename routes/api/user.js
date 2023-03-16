@@ -10,7 +10,8 @@ router.prefix('/api/user')
 
 // 注册路由
 router.post('/register', async (ctx, next) => {
-  const { userName } = ctx.request.body
+  const { userName, password, gender } = ctx.request.body
+  // 调用controller 返回
 })
 
 // 用户名是否存在
