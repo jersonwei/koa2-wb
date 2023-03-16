@@ -1,5 +1,7 @@
 const router = require('koa-router')()
 const jwt = require('jsonwebtoken')
+const util = require('util')
+const verify = util.promisify(jwt.verify)
 const { SECRET_CODE } = require('../conf/constant')
 router.prefix('/users')
 
@@ -41,5 +43,17 @@ router.post('/login', async (ctx, next) => {
     userInfo,
     data: token
   }
+})
+
+//获取用户信息
+router.get('/getUserInfo', async (ctx, next) => {
+  const token = ctx.header.authorization
+  try {
+    const payload = await verify(token.split(' ')[1], SECRET_CODE)
+    ctx.body = {
+      errno: 0,
+      userInfo: payload
+    }
+  } catch (error) {}
 })
 module.exports = router
