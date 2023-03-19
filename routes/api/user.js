@@ -6,7 +6,8 @@ const {
   isExist,
   register,
   login,
-  deleteCurUser
+  deleteCurUser,
+  changeInfo
 } = require('../../controller/user')
 const { loginCheck } = require('../../midwares/loginCheck')
 const { genValidator } = require('../../midwares/validator')
@@ -30,7 +31,6 @@ router.post('/isExist', async (ctx, next) => {
   const { userName } = ctx.request.body
   ctx.body = await isExist(userName)
 })
-
 // 登陆
 router.post('/login', async (ctx, next) => {
   const { userName, password } = ctx.request.body
@@ -46,4 +46,16 @@ router.post('/delete', loginCheck, async (ctx, next) => {
     ctx.body = await deleteCurUser(userName)
   }
 })
+
+// 修改个人信息
+router.path(
+  '/changeInfo',
+  loginCheck,
+  genValidator(userValidate),
+  async (ctx, next) => {
+    const { nickName, city, picture } = ctx.request.body
+    // controller
+    ctx.body = await changeInfo(ctx, { nickName, city, picture })
+  }
+)
 module.exports = router
