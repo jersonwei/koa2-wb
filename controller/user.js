@@ -103,7 +103,7 @@ async function changeInfo (ctx, { nickName, city, picture }) {
     nickName = userName
   }
   // service
-  const resulr = updateUser(
+  const result = updateUser(
     {
       newNickName: nickName,
       newCity: city,
@@ -144,11 +144,22 @@ async function changePassword (userName, password, newPassword) {
   }
   return new ErrorModel(changePasswordFailInfo)
 }
+
+/**
+ * 退出登陆
+ * @param {Object} ctx ctx
+ */
+
+async function logout (ctx) {
+  delete ctx.session.userInfo
+  return new SuccessModel()
+}
 module.exports = {
   isExist,
   register,
   login,
   deleteCurUser,
   changeInfo,
-  changePassword
+  changePassword,
+  logout
 }

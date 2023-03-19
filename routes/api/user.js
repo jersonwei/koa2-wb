@@ -8,7 +8,8 @@ const {
   login,
   deleteCurUser,
   changeInfo,
-  changePassword
+  changePassword,
+  logout
 } = require('../../controller/user')
 const { loginCheck } = require('../../midwares/loginCheck')
 const { genValidator } = require('../../midwares/validator')
@@ -59,6 +60,7 @@ router.patch(
     ctx.body = await changeInfo(ctx, { nickName, city, picture })
   }
 )
+// 修改密码
 router.patch(
   '/changePassword',
   loginCheck,
@@ -70,4 +72,8 @@ router.patch(
     ctx.body = changePassword(userName, password, newPassword)
   }
 )
+// 退出登陆
+router.push('/logout', loginCheck, async (ctx, next) => {
+  ctx.body = await logout(ctx)
+})
 module.exports = router
