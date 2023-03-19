@@ -9,7 +9,8 @@ const {
   registerFailInfo,
   loginFailInfo,
   deleteUserFailInfo,
-  changeInfoFailInfo
+  changeInfoFailInfo,
+  changePasswordFailInfo
 } = require('../model/ErrorInfo')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const {
@@ -124,10 +125,30 @@ async function changeInfo (ctx, { nickName, city, picture }) {
   // 执行失败
   return new ErrorModel(changeInfoFailInfo)
 }
+
+/**
+ * @param {string} userName
+ * @param {string} password
+ * @param {string} newPassword
+ */
+async function changePassword (userName, password, newPassword) {
+  const result = await updateUser(
+    { newPassword: doCropto(newPassword) },
+    {
+      userName,
+      password: doCropto(password)
+    }
+  )
+  if (result) {
+    return new SuccessModel()
+  }
+  return new ErrorModel(changePasswordFailInfo)
+}
 module.exports = {
   isExist,
   register,
   login,
   deleteCurUser,
-  changeInfo
+  changeInfo,
+  changePassword
 }
